@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Boo chan ❤️</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #ff758c, #ffb199);
+    text-align: center;
+    overflow: hidden;
+    color: white;
+}
+
+/* Intro Page */
+#introPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#introPage h1 {
+    font-size: 50px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px #fff;
+}
+#introPage button {
+    padding: 15px 40px;
+    font-size: 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+#yesIntro:hover { transform: scale(1.1); box-shadow: 0 0 15px #fff;}
+#noIntro:hover { transform: scale(1.1); }
+
+/* Gallery Page */
+#galleryPage {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.slide-container {
+    max-width: 600px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+}
+.slide-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    display: none;
+    animation: fadeScale 4s ease-in-out forwards;
+}
+@keyframes fadeScale {
+    0% {opacity:0; transform: scale(1.05);}
+    50% {opacity:1; transform: scale(1);}
+    100% {opacity:0; transform: scale(1.05);}
+}
+
+/* Quotes */
+.quote {
+    font-size: 24px;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Quizzes */
+.quiz {
+    margin-top: 15px;
+}
+.quiz button {
+    padding: 10px 25px;
+    margin: 5px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Date Question */
+#dateQuestion {
+    display: none;
+    font-size: 28px;
+    margin-top: 30px;
+}
+#dateQuestion button {
+    padding: 12px 30px;
+    font-size: 18px;
+    margin: 15px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+/* Hearts animation */
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 4s linear infinite;
+}
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-600px); opacity: 0; }
+}
+</style>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+   (function(){emailjs.init("YOUR_PUBLIC_KEY");})(); // Replace YOUR_PUBLIC_KEY
+</script>
+</head>
+<body>
+
+<!-- Intro Page -->
+<div id="introPage">
+    <h1>Will you be my Valentine? ❤️</h1>
+    <div>
+        <button id="yesIntro">YES</button>
+        <button id="noIntro">NO</button>
+    </div>
+</div>
+
+<!-- Gallery Page -->
+<div id="galleryPage">
+    <div class="slide-container">
+        <img src="photo1.jpg" alt="Slide 1">
+        <div class="quote" id="quote1">"Every moment with you feels like a dream…"</div>
+
+        <!-- Quiz 1 -->
+        <div class="quiz" id="quiz1">
+            <p>If we could go on a dream date, what would you pick?</p>
+            <button data-answer="A) Candlelight dinner under the stars ✨">A) Candlelight dinner under the stars ✨</button>
+            <button data-answer="B) A fun adventure like hiking or amusement park 🎢">B) Adventure like hiking/amusement park 🎢</button>
+            <button data-answer="C) Just a cozy night in with movies 🍿">C) Cozy night in with movies 🍿</button>
+        </div>
+
+        <!-- Quiz 2 -->
+        <div class="quiz" id="quiz2">
+            <p>How do you like to feel loved the most?</p>
+            <button data-answer="A) Hugs, kisses, and physical touch 💑">A) Hugs, kisses, and physical touch 💑</button>
+            <button data-answer="B) Sweet words and compliments 💌">B) Sweet words and compliments 💌</button>
+            <button data-answer="C) Spending quality time together 🕯️">C) Spending quality time together 🕯️</button>
+        </div>
+
+        <img src="photo2.jpg" alt="Slide 2">
+        <div class="quote" id="quote2">"You are my heart’s melody…"</div>
+    </div>
+
+    <div id="dateQuestion">
+        Would you go on a date with me on 17/02/2026? ❤️
+        <br>
+        <button id="yesDate">YES</button>
+        <button id="noDate">NO</button>
+    </div>
+</div>
+
+<audio id="bgMusic" src="love.mp3" loop></audio>
+
+<script>
+// --- NO buttons jump
+function randomMove(btn){
+    btn.style.position = "absolute";
+    btn.style.left = Math.random()*(window.innerWidth - btn.offsetWidth)+"px";
+    btn.style.top = Math.random()*(window.innerHeight - btn.offsetHeight)+"px";
+}
+
+// Intro buttons
+const yesIntro = document.getElementById("yesIntro");
+const noIntro = document.getElementById("noIntro");
+yesIntro.addEventListener("click", ()=> {
+    startGallery();
+
+    // Send Valentine email to her
+    emailjs.send("YOUR_SERVICE_ID","VALENTINE_TEMPLATE_ID",{ // Replace
+        to_email: "hinafathimaa2005@gmail.com",
+        from_name: "Riyaz",
+        message: "You are now officially a Valentine for Riyaz 🫶🏻❤️"
+    })
+    .then(()=>{ console.log("Valentine email sent!"); })
+    .catch((err)=>{ console.log("Email error:", err); });
+});
+noIntro.addEventListener("mouseover", ()=>randomMove(noIntro));
+
+// Slides & quotes
+const slides = document.querySelectorAll(".slide-container img");
+const quotes = document.querySelectorAll(".slide-container .quote");
+
+// Quiz selections storage
+let quizAnswers = [];
+
+// --- Quiz buttons
+document.querySelectorAll("#quiz1 button, #quiz2 button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+        quizAnswers.push(btn.getAttribute("data-answer"));
+        btn.style.background = "#ff4d6d"; // Highlight choice
+
+        // When both quizzes answered, hide them
+        if(quizAnswers.length === 2){
+            document.getElementById("quiz1").style.display = "none";
+            document.getElementById("quiz2").style.display = "none";
+
+            // Send quiz answers to your email
+            emailjs.send("YOUR_SERVICE_ID","QUIZ_TEMPLATE_ID",{ // Replace
+                to_email: "mdriyaz120705@gmail.com",
+                from_name: "Riyaz",
+                message: `Quiz answers:\n1) ${quizAnswers[0]}\n2) ${quizAnswers[1]}`
+            })
+            .then(()=>console.log("Quiz answers sent!"))
+            .catch(err=>console.log("Email error:", err));
+        }
+    });
+});
+
+// Start gallery
+function startGallery(){
+    document.getElementById("introPage").style.display = "none";
+    document.getElementById("galleryPage").style.display = "flex";
+
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.4;
+    music.play();
+
+    setInterval(()=>createHeart(),500);
+
+    // Show first slide
+    slides[0].style.display = "block";
+    quotes[0].style.opacity = 1;
+
+    // After 8 seconds, move to slide 2
+    setTimeout(()=>{
+        slides[0].style.display = "none";
+        quotes[0].style.opacity = 0;
+
+        slides[1].style.display = "block";
+        quotes[1].style.opacity = 1;
+
+        // Show date question after 4s
+        setTimeout(()=>{ document.getElementById("dateQuestion").style.display = "block"; },4000);
+    },8000);
+}
+
+// Floating hearts
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random()*window.innerWidth+"px";
+    heart.style.top = "90vh";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),4000);
+}
+
+// Date YES/NO
+const yesDate = document.getElementById("yesDate");
+const noDate = document.getElementById("noDate");
+noDate.addEventListener("mouseover", ()=>randomMove(noDate));
+
+yesDate.addEventListener("click", ()=>{
+    for(let i=0;i<50;i++){ setTimeout(createHeart,i*100); }
+
+    // Send Date YES email to you
+    emailjs.send("YOUR_SERVICE_ID","DATE_TEMPLATE_ID",{ // Replace
+        to_email: "mdriyaz120705@gmail.com",
+        from_name: "Riyaz",
+        message: "She said YES bro 😭❤️"
+    })
+    .then(()=>{ console.log("Date YES email sent!"); })
+    .catch(err=>{ console.log("Email error:", err); });
+
+    alert("Yay! You said YES! 💖");
+    window.close();
+});
+</script>
+</body>
+</html>
